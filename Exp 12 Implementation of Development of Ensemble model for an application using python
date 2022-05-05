@@ -1,0 +1,60 @@
+AIM:
+Implementation of Development of ensemble model for an application
+
+Algorithm:
+Initialization:
+1. Given training data from the instance space.
+    s={(x1,y1),.....(xm,ym)} where xiEx and yiEy={-1,+1}
+2. Initialize the distribution Di(i)=1/m
+Algorithm:
+for t=1,...T:do
+Train a weak learner ht:x->R using distribution Dt Determine weight αt of ht.
+update the distribution over the training set:
+  Dt ti(i)=Dt(i)e-αt yi ht (xi)/zt
+where zt is a normalization factor chosen so that Dt+1 will be a distribution.
+end for
+Final Score:
+f(x)=αtht(x) and H(x)=sign(f(x))
+
+program:
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn import datasets
+
+from sklearn.model_selection import train_test_split
+
+from sklearn import metrics
+
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3) 
+
+abc = AdaBoostClassifier(n_estimators=50,
+                         learning_rate=1)
+
+model = abc.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+
+from sklearn.ensemble import AdaBoostClassifier
+
+from sklearn.svm import SVC
+
+from sklearn import metrics
+svc=SVC(probability=True, kernel='linear')
+
+abc =AdaBoostClassifier(n_estimators=50, base_estimator=svc,learning_rate=1)
+
+model = abc.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+
+Output:
+Accuracy: 0.9777777777777777
+Accuracy: 0.8666666666666667
+
+Result:
+Hence, implementation of ensemble model for an application has executed successfully using python.

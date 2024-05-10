@@ -1,0 +1,30 @@
+#BFS
+
+from collections import deque
+
+def bfs(graph,start):
+  visited=set()
+  pq=deque([start])
+
+  while pq:
+    node=deque.popleft(pq)
+    if node not in visited:
+      print(node)
+      visited.add(node)
+
+    for n in graph[node]:
+      if n not in visited:
+        pq.append(n)
+
+graph={}
+num=int(input("enter no of node- "))
+
+for _ in range(num):
+  node=input("enter the node- ")
+  neighbors=input("enter the neighbous- ").split()
+  graph[node]=neighbors
+
+
+start_node=input("enter start node- ")
+
+bfs(graph,start_node)

@@ -1,0 +1,27 @@
+#k-mean clustering
+
+import matplotlib.pyplot as plt
+
+x=[2,4,13,10,12,7,9,15,6,3]
+y=[22,24,23,20,22,22,19,18,25,17]
+
+plt.scatter(x,y)
+plt.show()
+
+from sklearn.cluster import KMeans
+data=list(zip(x,y))
+inertias=[]
+
+for i in range(1,11):
+  kmeans=KMeans(n_clusters=i)
+  kmeans.fit(data)
+  inertias.append(kmeans.inertia_)
+
+plt.plot(range(1,11),inertias,marker='o')
+plt.xlabel("no of clusters")
+plt.ylabel("inertias")
+plt.show()
+kmeans=KMeans(n_clusters=2)
+kmeans.fit(data)
+plt.scatter(x,y,c=kmeans.labels_)
+plt.show()

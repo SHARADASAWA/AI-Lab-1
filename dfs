@@ -1,0 +1,23 @@
+#DFS
+visited=set()
+def dfs(graph,node):
+  if node not in visited:
+    print(node)
+    visited.add(node)
+
+  for n in graph[node]:
+    dfs(graph,n)
+
+graph={}
+num=int(input("enter no of node- "))
+
+for _ in range(num):
+  node=input("enter the node- ")
+  neighbors=input("enter the neighbous- ").split()
+  graph[node]=neighbors
+
+
+start_node=input("enter start node- ")
+
+dfs(graph,start_node)
+

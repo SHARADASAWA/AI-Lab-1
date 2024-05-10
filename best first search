@@ -1,0 +1,36 @@
+#best first search
+
+import heapq
+
+def best_first_search(graph,start,goal):
+  visited=set()
+  pq=[(0,start,[start])]
+
+  while pq:
+    cost,node,path=heapq.heappop(pq)
+    if node==goal:
+      return path
+    visited.add(node)
+
+    for n,n_cost in graph[node]:
+      if n not in visited:
+        heapq.heappush(pq,(n_cost,n,path+[n]))
+
+    return[]
+
+
+
+graph={}
+num=int(input("enter no of node- "))
+
+for _ in range(num):
+  node=input("enter the node- ")
+  neighbors=input("enter the neighbous- ").split()
+  graph[node]=[(neighbors[i],int(neighbors[i+1])) for i in range (0,len(neighbors),2)]
+
+
+start_node=input("enter start node- ")
+goal_node=input("enter goal node- ")
+
+best_first_search(graph,start_node,goal_node)
+

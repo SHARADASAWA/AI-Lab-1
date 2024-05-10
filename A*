@@ -1,0 +1,53 @@
+
+#A*
+
+class Tree:
+    def __init__(self, value, g=0, h=0):
+        self.value = value
+        self.children = []
+        self.g = g
+        self.h = h
+
+    def f(self):
+        return self.g + self.h
+
+def construct_tree_with_costs():
+    root = Tree('A', g=0, h=3)
+    b = Tree('B', g=1, h=2)
+    c = Tree('C', g=2, h=1)
+    d = Tree('D', g=3, h=2)
+    e = Tree('E', g=3, h=0)
+    f = Tree('F', g=4, h=1)
+
+    root.children = [b, c]
+    c.children = [e, f]
+    f.children = [d]
+    return root
+
+import heapq
+import itertools
+
+def a_star_search(root):
+    if root is None:
+        return []
+
+    open_set = []
+    counter = itertools.count()
+    heapq.heappush(open_set, (root.f(), next(counter), root))
+    result = []
+
+    while open_set:
+        current_f, _, current_node = heapq.heappop(open_set)
+        result.append(current_node.value)
+        if current_node.h == 0:
+            break
+        for child in current_node.children:
+            heapq.heappush(open_set, (child.f(), next(counter), child))
+
+    return result
+
+
+tree_root = construct_tree_with_costs()
+print("A* Search Path:")
+a_star_path = a_star_search(tree_root)
+print(a_star_path)
